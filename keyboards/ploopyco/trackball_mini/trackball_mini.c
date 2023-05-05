@@ -91,6 +91,19 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
     return true;
 }
 
+
+#ifdef ENCODER_MAP_ENABLE
+static void encoder_exec_mapping(uint8_t index, bool clockwise) {
+    xprintf("Encoder exec: index: %u, clockwise: %u\n", index, clockwise);
+
+    // The delays below cater for Windows and its wonderful requirements.
+    action_exec(clockwise ? ENCODER_CW_EVENT(index, true) : ENCODER_CCW_EVENT(index, true));
+    wait_ms(ENCODER_MAP_KEY_DELAY);
+    action_exec(clockwise ? ENCODER_CW_EVENT(index, false) : ENCODER_CCW_EVENT(index, false));
+    wait_ms(ENCODER_MAP_KEY_DELAY);
+}
+#endif // ENCODER_MAP_ENABLE
+
 void process_wheel(void) {
     // If the mouse wheel was just released, do not scroll.
     if (timer_elapsed(lastMidClick) < SCROLL_BUTT_DEBOUNCE) return;
@@ -114,7 +127,12 @@ void process_wheel(void) {
     int8_t dir = opt_encoder_handler(p1, p2);
 
     if (dir == 0) return;
+#ifdef ENCODER_MAP_ENABLE
+    encoder_exec_mapping(0, dir > 0);
+#else  // ENCODER_MAP_ENABLE
+    xprintf("Encoder not exec!\n");
     encoder_update_kb(0, dir > 0);
+#endif // ENCODER_MAP_ENABLE
 }
 
 void pointing_device_init_kb(void) {

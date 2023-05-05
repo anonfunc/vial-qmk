@@ -36,7 +36,9 @@
 #ifdef ENCODER_ENABLE
 #    include "encoder.h"
 #else
+#ifndef NUM_ENCODERS
 #    define NUM_ENCODERS 0
+#endif
 #endif
 
 _Static_assert(DYNAMIC_KEYMAP_MACRO_COUNT+MACRO00 < USER00, "DYNAMIC_KEYMAP_MACRO_COUNT too big.");
@@ -162,7 +164,7 @@ void *dynamic_keymap_encoder_to_eeprom_address(uint8_t layer, uint8_t encoder_id
 }
 
 uint16_t dynamic_keymap_get_encoder(uint8_t layer, uint8_t encoder_id, bool clockwise) {
-    if (layer >= DYNAMIC_KEYMAP_LAYER_COUNT || encoder_id >= NUM_ENCODERS) return KC_NO;
+    if (layer >= DYNAMIC_KEYMAP_LAYER_COUNT || encoder_id >= NUM_ENCODERS) return KC_MUTE; // xxx
     void *address = dynamic_keymap_encoder_to_eeprom_address(layer, encoder_id);
     // Big endian, so we can read/write EEPROM directly from host if we want
     uint16_t keycode = ((uint16_t)eeprom_read_byte(address + (clockwise ? 0 : 2))) << 8;

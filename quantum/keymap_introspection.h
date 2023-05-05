@@ -7,7 +7,7 @@
 // Get the number of layers defined in the keymap
 uint8_t keymap_layer_count(void);
 
-#if defined(ENCODER_ENABLE) && defined(ENCODER_MAP_ENABLE)
+#if defined(ENCODER_MAP_ENABLE)
 
 // Get the number of layers defined in the encoder map
 uint8_t encodermap_layer_count(void);

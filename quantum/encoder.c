@@ -173,7 +173,7 @@ static bool encoder_update(uint8_t index, uint8_t state) {
 
             encoder_value[index]++;
             changed = true;
-#ifdef ENCODER_MAP_ENABLE
+#ifdef ENCODER_MAP_ENABLE 
             encoder_exec_mapping(index, ENCODER_COUNTER_CLOCKWISE);
 #else  // ENCODER_MAP_ENABLE
         encoder_update_kb(index, ENCODER_COUNTER_CLOCKWISE);

@@ -57,5 +57,10 @@ enum ploopy_keycodes {
 #endif
 };
 
+#ifdef ENCODER_MAP_ENABLE
+#undef NUM_ENCODERS
+#define NUM_ENCODERS 1
+#endif // ENCODER_MAP_ENABLE
+
 bool encoder_update_user(uint8_t index, bool clockwise);
 bool encoder_update_kb(uint8_t index, bool clockwise);

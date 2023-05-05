@@ -25,7 +25,10 @@
 #define MATRIX_ROWS 1
 #define MATRIX_COLS 5
 
-
+// Stub encoder arrays, unusable pins?
+// #define ENCODERS_PAD_A {  }
+// #define ENCODERS_PAD_B {  }
+// #define NUM_ENCODERS 1
 /* Debounce reduces chatter (unintended double-presses) - set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
